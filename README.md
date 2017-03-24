@@ -69,7 +69,9 @@ voice command with a callback that will be called when the
 command is spoken.  This is done as follows:
 
 ```
-from dragonfly.all import Grammar, CompoundRule
+from dragonfly import Grammar, CompoundRule
+from time import sleep
+import pythoncom
 
 # Voice command rule combining spoken form and recognition processing.
 class ExampleRule(CompoundRule):
@@ -81,6 +83,11 @@ class ExampleRule(CompoundRule):
 grammar = Grammar("example grammar")                # Create a grammar to contain the command rule.
 grammar.add_rule(ExampleRule())                     # Add the command rule to the grammar.
 grammar.load()                                      # Load the grammar.
+
+# For pumping out the messages(only for WSR)
+while True:
+    pythoncom.PumpWaitingMessages()
+    sleep(.1)
 ```
 
 The example above is very basic and doesn't show any of 
